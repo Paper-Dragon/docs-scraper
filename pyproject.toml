@@ -20,7 +20,8 @@ dependencies = [
     "meilisearch==0.28.2",
     "requests-iap==0.2.0",
     "python-keycloak-client==0.2.3",
-    "requests==2.31.0",
+    "requests>=2.32.5,<3",
+    "chardet>=3.0.2,<6",
 ]
 
 [dependency-groups]
