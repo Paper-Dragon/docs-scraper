@@ -28,29 +28,29 @@ First of all, thank you for contributing to Meilisearch! The goal of this docume
 
 ### Install and Launch <!-- omit in TOC -->
 
-The [`pipenv` command](https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv) must be installed.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
 Set both environment variables `MEILISEARCH_HOST_URL` and `MEILISEARCH_API_KEY`.
 
 Then, run:
 
 ```bash
-pipenv install
-pipenv run ./docs_scraper <path-to-your-config-file>
+uv sync
+uv run ./docs_scraper <path-to-your-config-file>
 ```
 
 ### Linter and Tests <!-- omit in TOC -->
 
 ```bash
-pipenv install --dev
+uv sync --group dev
 # Linter
-pipenv run pylint scraper
+uv run pylint scraper
 ```
 
 If you have [a `chromedriver`](https://sites.google.com/chromium.org/driver/), you can run the full test suite by passing the path to your `chromedriver`.
 
 ```bash
-pipenv run pytest --chromedriver=/path/to/your/chromedriver
+uv run pytest --chromedriver=/path/to/your/chromedriver
 ```
 
 Where `path/to/your/chromedriver` matches your particular path. If you are unsure of your `chromedriver` path you find it on Linux/Mac with:
@@ -71,7 +71,7 @@ It is possible when running the tests that an error occurs if your running chrom
 If you do not have `chromedriver` installed you can skip the tests that require it by running the tests with:
 
 ```bash
-pipenv run pytest -m "not chromedriver"
+uv run pytest -m "not chromedriver"
 ```
 
 Note that these tests will still run in CI when you submit your pull request.
@@ -79,13 +79,13 @@ Note that these tests will still run in CI when you submit your pull request.
 Optionally tox can be used to run test on all supported version of Python and linting.
 
 ```bash
-pipenv run tox -- --chromedriver=/path/to/your/chromedriver
+uv run tox -- --chromedriver=/path/to/your/chromedriver
 ```
 
 Or to run tox if you don't have chromedriver
 
 ```bash
-pipenv run tox -- -m "not chromedriver"
+uv run tox -- -m "not chromedriver"
 ```
 
 ## Git Guidelines

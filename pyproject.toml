@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scraper*"]
+namespaces = true
+
+[project]
+name = "docs-scraper"
+version = "0.13.1"
+description = "Meilisearch documentation scraper"
+readme = "README.md"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+    "Scrapy>=2.13.0,<3",
+    "twisted>=24.3.0",
+    "selenium==4.10.0",
+    "meilisearch==0.28.2",
+    "requests-iap==0.2.0",
+    "python-keycloak-client==0.2.3",
+    "requests==2.31.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==7.4.1",
+    "pylint>=3.3.0",
+    "tox>=4.24.1,<4.40",
+    "tox-uv==1.25.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+markers = [
+    "chromedriver: mark a test as a test using chromedriver.",
+]

@@ -16,26 +16,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pipenv
-        run: pipx install pipenv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
-          cache: "pipenv"
+          python-version: "3.14"
 
       - name: Install dependencies
-        run: pipenv install --dev
+        run: uv sync --group dev
 
       - name: Linter with pylint
-        run: pipenv run pylint scraper
+        run: uv run pylint scraper
 
   unit_tests:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.12", "3.13", "3.14"]
     name: unit-tests
     runs-on: ubuntu-latest
     steps:
@@ -44,20 +43,19 @@ jobs:
       - name: Install Chromium
         run: sudo apt-get update && sudo apt-get install -y chromium-browser chromium-chromedriver
 
-      - name: Install pipenv
-        run: pipx install pipenv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "pipenv"
 
       - name: Install dependencies
-        run: pipenv install --dev
+        run: uv sync --group dev
 
       - name: Run tests
-        run: pipenv run pytest
+        run: uv run pytest
 
   integration_tests:
     env:
@@ -66,34 +64,33 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.12", "3.13", "3.14"]
     name: integration-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pipenv
-        run: pipx install pipenv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "pipenv"
 
       - name: Install dependencies for production only
-        run: pipenv install
+        run: uv sync
 
       - name: Meilisearch setup with Docker
         run: docker run -d -p 7700:7700 getmeili/meilisearch:latest meilisearch --no-analytics --master-key=masterKey
 
       - name: Run the scraper with basic config
-        run: pipenv run ./docs_scraper $CONFIG_FILE
+        run: uv run ./docs_scraper $CONFIG_FILE
         env:
           CONFIG_FILE: "tests/config_files_examples/docs-basics.config.json"
 
       - name: Run the scraper with custom config
-        run: pipenv run ./docs_scraper $CONFIG_FILE
+        run: uv run ./docs_scraper $CONFIG_FILE
         env:
           CONFIG_FILE: "tests/config_files_examples/docs-custom.config.json"
 

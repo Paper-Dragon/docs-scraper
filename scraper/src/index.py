@@ -38,7 +38,7 @@ def run_config(config):
 
     strategy = DefaultStrategy(config)
 
-    is_update = True if config.only_urls else False
+    is_update = bool(config.only_urls)
 
     meilisearch_helper = MeiliSearchHelper(
         config.app_id,

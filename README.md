@@ -170,17 +170,17 @@ You can also check out the [config file](https://github.com/meilisearch/document
 
 #### From Source Code <!-- omit in TOC -->
 
-This project supports Python 3.8 and above.
+This project supports Python 3.12 through 3.14.
 
-The [`pipenv` command](https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv) must be installed.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then from the repository root run `uv sync` to create a virtual environment and install dependencies.
 
 Set both environment variables `MEILISEARCH_HOST_URL` and `MEILISEARCH_API_KEY`.<br>
 Following on from the example in the [first step](#run-your-meilisearch-instance), they are respectively `http://localhost:7700` and `myMasterKey`.
 
 Then, run:
 ```bash
-pipenv install
-pipenv run ./docs_scraper <path-to-your-config-file>
+uv sync
+uv run ./docs_scraper <path-to-your-config-file>
 ```
 
 `<path-to-your-config-file>` should be the path of your configuration file defined at the [previous step](#set-your-config-file).
@@ -192,7 +192,7 @@ docker run -t --rm \
     -e MEILISEARCH_HOST_URL=<your-meilisearch-host-url> \
     -e MEILISEARCH_API_KEY=<your-meilisearch-api-key> \
     -v <absolute-path-to-your-config-file>:/docs-scraper/<path-to-your-config-file> \
-    getmeili/docs-scraper:latest pipenv run ./docs_scraper <path-to-your-config-file>
+    getmeili/docs-scraper:latest ./docs_scraper <path-to-your-config-file>
 ```
 
 `<absolute-path-to-your-config-file>` should be the absolute path of your configuration file defined at the [previous step](#set-your-config-file).
@@ -219,7 +219,7 @@ run-scraper:
           -e MEILISEARCH_HOST_URL=$HOST_URL \
           -e MEILISEARCH_API_KEY=$API_KEY \
           -v $CONFIG_FILE_PATH:/docs-scraper/<path-to-your-config-file> \
-          getmeili/docs-scraper:latest pipenv run ./docs_scraper <path-to-your-config-file>
+          getmeili/docs-scraper:latest ./docs_scraper <path-to-your-config-file>
 ```
 
 ⚠️ We do not recommend using the `latest` image in production. Use the [release tags](https://github.com/meilisearch/docs-scraper/releases) instead.

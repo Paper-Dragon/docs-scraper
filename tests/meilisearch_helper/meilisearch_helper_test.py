@@ -30,7 +30,8 @@ class TestMeilisearchHelper:
                 common.BASE_URL,
                 common.MASTER_KEY,
                 common.DEFAULT_INDEX,
-                MeiliSearchHelper.SETTINGS
+                MeiliSearchHelper.SETTINGS,
+                True,
             )
 
         # Then

@@ -1,4 +1,10 @@
 .DS_Store
+
+# setuptools / pip build
+build/
+dist/
+*.egg-info/
+
 crawling_data
 node_modules
 checker/node_modules
@@ -10,6 +16,7 @@ src/strategies/__pycache__/
 update.sh
 .python-version
 .tox
+.venv/
 
 *yarn.lock
 

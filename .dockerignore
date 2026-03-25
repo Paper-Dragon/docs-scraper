@@ -15,7 +15,6 @@ dist/
 **/*.py[cod]
 **/*.egg
 **/tests/
-pytest.ini
 tox.ini
 
 # C extensions
