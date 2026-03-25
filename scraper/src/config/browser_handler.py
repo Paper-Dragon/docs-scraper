@@ -26,8 +26,8 @@ class BrowserHandler:
             chrome_options.add_argument('--headless')
             chrome_options.add_argument(f'user-agent={user_agent}')
 
-            driver = webdriver.Chrome(
-                options=chrome_options)
+            # Selenium 4: Chrome is constructible; pylint infers the type as non-callable.
+            driver = webdriver.Chrome(options=chrome_options)  # pylint: disable=not-callable
             CustomDownloaderMiddleware.driver = driver
             JsExecutor.driver = driver
         return driver

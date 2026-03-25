@@ -20,13 +20,8 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.14"
-          # Job id: parallel jobs must not share the same save key
-          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
-
-      - name: Set up Python 3.14
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.14"
+          cache-suffix: ${{ github.job }}
+          cache-python: true
 
       - name: Install dependencies
         run: uv sync --group dev
@@ -39,7 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.12", "3.13", "3.14"]
-    name: unit-tests
+    name: unit-tests (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -50,12 +45,9 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
-        with:
           python-version: ${{ matrix.python-version }}
+          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
+          cache-python: true
 
       - name: Install dependencies
         run: uv sync --group dev
@@ -71,7 +63,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.12", "3.13", "3.14"]
-    name: integration-tests
+    name: integration-tests (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -79,12 +71,9 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
-        with:
           python-version: ${{ matrix.python-version }}
+          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
+          cache-python: true
 
       - name: Install dependencies for production only
         run: uv sync

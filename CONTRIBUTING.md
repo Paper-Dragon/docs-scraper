@@ -76,13 +76,13 @@ uv run pytest -m "not chromedriver"
 
 Note that these tests will still run in CI when you submit your pull request.
 
-Optionally tox can be used to run test on all supported version of Python and linting.
+To run the linter and tests on all supported Python versions locally, use [tox](https://tox.wiki/) with the [tox-uv](https://github.com/tox-dev/tox-uv) backend (after `uv sync --group dev`):
 
 ```bash
 uv run tox -- --chromedriver=/path/to/your/chromedriver
 ```
 
-Or to run tox if you don't have chromedriver
+If you do not have `chromedriver`:
 
 ```bash
 uv run tox -- -m "not chromedriver"

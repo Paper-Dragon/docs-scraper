@@ -8,14 +8,22 @@ updates:
     - 'skip-changelog'
     - 'dependencies'
   rebase-strategy: disabled
+  groups:
+    actions-all:
+      patterns:
+        - "*"
 
 - package-ecosystem: pip
   directory: "/"
   schedule:
-    interval: "monthly"
+    interval: "weekly"
     time: "04:00"
   open-pull-requests-limit: 15
   labels:
   - skip-changelog
   - dependencies
   rebase-strategy: disabled
+  groups:
+    pip-all:
+      patterns:
+        - "*"

@@ -73,8 +73,10 @@ class TestStartUrls:
     @pytest.mark.chromedriver
     def test_start_urls_should_be_generated_when_there_is_automatic_tagging_browser(
             self, monkeypatch):
-        monkeypatch.setattr("selenium.webdriver.chrome",
-                            lambda x: MockedInit())
+        monkeypatch.setattr(
+            "scraper.src.config.browser_handler.webdriver.Chrome",
+            lambda *_, **__: MockedInit(),
+        )
 
         # When
         c = config({

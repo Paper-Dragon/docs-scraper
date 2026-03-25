@@ -19,8 +19,10 @@ class TestOpenSeleniumBrowser:
 
     @pytest.mark.chromedriver
     def test_browser_needed_when_js_render_true(self, monkeypatch):
-        monkeypatch.setattr("selenium.webdriver.chrome",
-                            lambda x: MockedInit())
+        monkeypatch.setattr(
+            "scraper.src.config.browser_handler.webdriver.Chrome",
+            lambda *_, **__: MockedInit(),
+        )
         # When
         c = config({
             "js_render": True
@@ -32,11 +34,12 @@ class TestOpenSeleniumBrowser:
                                                 actual.js_render) is True
 
     @pytest.mark.chromedriver
-    @pytest.mark.xfail(strict=True)
     def test_browser_needed_when_config_contains_automatic_tag(self,
                                                                monkeypatch):
-        monkeypatch.setattr("selenium.webdriver.chrome",
-                            lambda x: MockedInit())
+        monkeypatch.setattr(
+            "scraper.src.config.browser_handler.webdriver.Chrome",
+            lambda *_, **__: MockedInit(),
+        )
 
         # When
         c = config({

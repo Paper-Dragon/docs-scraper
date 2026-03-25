@@ -18,8 +18,10 @@ class TestGetExtraFacets:
     @pytest.mark.chromedriver
     def test_extra_facets_should_be_set_from_start_urls_variables_browser(self,
                                                                           monkeypatch):
-        monkeypatch.setattr("selenium.webdriver.chrome",
-                            lambda x: MockedInit())
+        monkeypatch.setattr(
+            "scraper.src.config.browser_handler.webdriver.Chrome",
+            lambda *_, **__: MockedInit(),
+        )
 
         c = config({
             "start_urls": [
@@ -41,8 +43,10 @@ class TestGetExtraFacets:
     @pytest.mark.chromedriver
     def test_extra_facets_should_be_set_from_start_urls_variables_with_two_start_url_browser(
             self, monkeypatch):
-        monkeypatch.setattr("selenium.webdriver.chrome",
-                            lambda x: MockedInit())
+        monkeypatch.setattr(
+            "scraper.src.config.browser_handler.webdriver.Chrome",
+            lambda *_, **__: MockedInit(),
+        )
 
         c = config({
             "js-render": True,
@@ -71,8 +75,10 @@ class TestGetExtraFacets:
     @pytest.mark.chromedriver
     def test_extra_facets_should_be_set_from_start_urls_variables_with_multiple_tags_browser(
             self, monkeypatch):
-        monkeypatch.setattr("selenium.webdriver.chrome",
-                            lambda x: MockedInit())
+        monkeypatch.setattr(
+            "scraper.src.config.browser_handler.webdriver.Chrome",
+            lambda *_, **__: MockedInit(),
+        )
 
         c = config({
             "start_urls": [
