@@ -30,4 +30,4 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: jqiue/docs-scraper:latest,jqiue/docs-scraper:${{ github.ref_name }}
+          tags: jockerdragon/docs-scraper:latest,jockerdragon/docs-scraper:${{ github.ref_name }}
