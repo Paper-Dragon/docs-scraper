@@ -21,14 +21,14 @@ dependencies = [
     "requests-iap>=0.2.0",
     "python-keycloak>=5.0,<8",
     "requests>=2.32.5,<3",
-    "chardet>=3.0.2,<6",
+    "chardet>=3.0.2,<8",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=7.4.1,<9",
+    "pytest>=7.4.1,<10",
     "pylint>=3.3.0",
-    "tox>=4.24.1,<4.40",
+    "tox>=4.24.1,<4.51",
     "tox-uv>=1.25.0,<2",
 ]
 
