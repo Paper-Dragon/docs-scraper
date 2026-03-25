@@ -28,4 +28,4 @@ If applicable, add screenshots or logs to help explain your problem.
 
 - OS: [e.g. Debian GNU/Linux 12]
 - Meilisearch version: [e.g. v1.10]
-- docs-scraper version: [e.g. v0.13.1]
+- docs-scraper version: [e.g. v0.0.2]

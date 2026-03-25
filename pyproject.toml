@@ -9,7 +9,7 @@ namespaces = true
 
 [project]
 name = "docs-scraper"
-version = "0.13.1"
+version = "0.0.2"
 description = "Meilisearch documentation scraper"
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
