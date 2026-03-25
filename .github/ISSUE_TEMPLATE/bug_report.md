@@ -8,19 +8,24 @@ assignees: ''
 
 <!-- This is not an exhaustive model but a help. No step is mandatory. -->
 
-**Description**
+### Description
+
 Description of what the bug is about.
 
-**Expected behavior**
+### Expected behavior
+
 What you expected to happen.
 
-**Current behavior**
+### Current behavior
+
 What happened.
 
-**Screenshots or Logs**
+### Screenshots or logs
+
 If applicable, add screenshots or logs to help explain your problem.
 
-**Environment (please complete the following information):**
-- OS: [e.g. Debian GNU/Linux]
-- Meilisearch version: [e.g. v.0.20.0]
-- docs-scraper version: [e.g v0.10.4]
+### Environment
+
+- OS: [e.g. Debian GNU/Linux 12]
+- Meilisearch version: [e.g. v1.10]
+- docs-scraper version: [e.g. v0.13.1]

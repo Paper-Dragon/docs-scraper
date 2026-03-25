@@ -34,7 +34,6 @@ class BrowserHandler:
 
     @staticmethod
     def destroy(driver):
-        # Start browser if needed
         if driver is not None:
             driver.quit()
             driver = None

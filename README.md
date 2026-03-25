@@ -36,9 +36,9 @@
 
 ---
 
-**docs-scraper** is a scraper for your documentation website that indexes the scraped content into a **Meilisearch** instance.
+docs-scraper is a scraper for your documentation website that indexes the scraped content into a Meilisearch instance.
 
-**Meilisearch** is an open-source search engine. [Discover what Meilisearch is!](https://github.com/meilisearch/meilisearch)
+Meilisearch is an open-source search engine. [Discover what Meilisearch is!](https://github.com/meilisearch/meilisearch)
 
 This scraper is used in production and runs on the [Meilisearch documentation](https://www.meilisearch.com/docs) on each deployment.
 
@@ -66,7 +66,7 @@ This scraper is used in production and runs on the [Meilisearch documentation](h
     - [`start_urls`](#start_urls)
       - [Using Page Rank ](#using-page-rank-)
     - [`stop_urls` (optional)](#stop_urls-optional)
-    - [`only_urls` （optional）](#only_urls-optional)
+    - [`only_urls` (optional)](#only_urls-optional)
     - [`selectors_key` (optional)](#selectors_key-optional)
     - [`scrape_start_urls` (optional)](#scrape_start_urls-optional)
     - [`sitemap_urls` (optional)](#sitemap_urls-optional)
@@ -122,7 +122,7 @@ _Meilisearch is open-source and can run either on your server or on any cloud pr
 
 ### Set your Config File
 
-The scraper tool needs a config file to know which content you want to scrape. This is done by providing **selectors** (e.g. the HTML tag/id/class). The config file is passed as an argument. It follows no naming convention and may be named as you want.
+The scraper tool needs a config file to know which content you want to scrape. This is done by providing selectors (e.g. the HTML tag/id/class). The config file is passed as an argument. It follows no naming convention and may be named as you want.
 
 Here is an example of a basic config file:
 
@@ -170,7 +170,7 @@ You can also check out the [config file](https://github.com/meilisearch/document
 
 #### From Source Code <!-- omit in TOC -->
 
-This project supports Python 3.12 through 3.14.
+This project supports Python 3.12 through 3.14 on Linux (matching CI).
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then from the repository root run `uv sync` to create a virtual environment and install dependencies.
 
@@ -192,7 +192,7 @@ docker run -t --rm \
     -e MEILISEARCH_HOST_URL=<your-meilisearch-host-url> \
     -e MEILISEARCH_API_KEY=<your-meilisearch-api-key> \
     -v <absolute-path-to-your-config-file>:/docs-scraper/<path-to-your-config-file> \
-    getmeili/docs-scraper:latest ./docs_scraper <path-to-your-config-file>
+    jockerdragon/docs-scraper:latest ./docs_scraper <path-to-your-config-file>
 ```
 
 `<absolute-path-to-your-config-file>` should be the absolute path of your configuration file defined at the [previous step](#set-your-config-file).
@@ -206,9 +206,9 @@ To run after your deployment job:
 ```yml
 run-scraper:
     needs: <your-deployment-job>
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
     - name: Run scraper
       env:
         HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
@@ -219,19 +219,19 @@ run-scraper:
           -e MEILISEARCH_HOST_URL=$HOST_URL \
           -e MEILISEARCH_API_KEY=$API_KEY \
           -v $CONFIG_FILE_PATH:/docs-scraper/<path-to-your-config-file> \
-          getmeili/docs-scraper:latest ./docs_scraper <path-to-your-config-file>
+          jockerdragon/docs-scraper:latest ./docs_scraper <path-to-your-config-file>
 ```
 
 ⚠️ We do not recommend using the `latest` image in production. Use the [release tags](https://github.com/meilisearch/docs-scraper/releases) instead.
 
-Here is the [GitHub Action file](https://github.com/meilisearch/documentation/blob/master/.github/workflows/gh-pages-scraping.yml) we use in production for the Meilisearch documentation.
+Here is the [GitHub Action file](https://github.com/meilisearch/documentation/blob/main/.github/workflows/gh-pages-scraping.yml) we use in production for the Meilisearch documentation.
 
 #### About the API Key <!-- omit in TOC -->
 
 The API key you must provide should have the permissions to add documents into your Meilisearch instance.<br>
 In a production environment, we recommend providing the private key instead of the master key, as it is safer and it has enough permissions to perform such requests.
 
-_More about [Meilisearch authentication](https://www.meilisearch.com/docs/learn/security/master_api_keys). _
+More about [Meilisearch authentication](https://www.meilisearch.com/docs/learn/security/master_api_keys).
 
 ## 🖌 And for the front-end search bar?
 
@@ -241,7 +241,7 @@ About the front part:
 - If your website is a VuePress application, check out the [vuepress-plugin-meilisearch](https://github.com/meilisearch/vuepress-plugin-meilisearch) repository.
 - For all kinds of documentation, check out the [docs-searchbar.js](https://github.com/meilisearch/docs-searchbar.js) library.
 
-**Both of these libraries provide a front-end search bar perfectly adapted for documentation.**
+Both of these libraries provide a front-end search bar suited to documentation sites.
 
 ![docs-searchbar-demo](assets/docs-searchbar-demo.gif)
 
@@ -252,7 +252,7 @@ About the front part:
 #### Bases <!-- omit in TOC -->
 
 Very simply, selectors are needed to tell the scraper "I want to get the content in this HTML tag".<br>
-This HTML tag is a **selector**.
+This HTML tag is a selector.
 
 A selector can be:
 
@@ -341,7 +341,7 @@ The scraper will not follow links that match `stop_urls`.
 }
 ```
 
-#### `only_urls` （optional）
+#### `only_urls` (optional)
 
 When `only_urls` have values, the scraper will only crawl these pages
 
@@ -503,7 +503,7 @@ If used, `min_indexed_level` is ignored.
 
 When `js_render` is set to `true`, the scraper will use ChromeDriver. This is needed for pages that are rendered with JavaScript, for example, pages generated with React, Vue, or applications that are running in development mode: `autoreload` `watch`.
 
-After installing ChromeDriver, provide the path to the bin using the following environment variable `CHROMEDRIVER_PATH` (default value is `/usr/bin/chromedriver`).
+Selenium 4 can resolve a matching ChromeDriver automatically when Chrome or Chromium is installed. If you need a specific binary, set `CHROMEDRIVER_PATH` (typical on Debian/Ubuntu: `/usr/bin/chromedriver`).
 
 The default value of `js_render` is `false`.
 
@@ -515,7 +515,7 @@ The default value of `js_render` is `false`.
 
 #### `js_wait` (optional)
 
-This setting can be used when `js_render` is set to `true` and the pages need time to fully load. `js_wait` takes an integer is specifies the number of seconds the scraper should wait for the page to load.
+This setting can be used when `js_render` is set to `true` and the pages need time to fully load. `js_wait` is an integer: the number of seconds the scraper waits for the page to load.
 
 ```json
 {
@@ -536,7 +536,7 @@ This setting specifies the domains that the scraper is allowed to access. In mos
 
 ### Authentication
 
-__WARNING:__ Please be aware that the scraper will send authentication headers to every scraped site, so use `allowed_domains` to adjust the scope accordingly!
+WARNING: The scraper sends authentication headers to every scraped site; use `allowed_domains` to limit scope.
 
 #### Basic HTTP <!-- omit in TOC -->
 
@@ -562,12 +562,13 @@ If you set the environment variables `KC_URL`, `KC_REALM`, `KC_CLIENT_ID`, and `
 
 ### Installing Chrome Headless
 
-Websites that need JavaScript for rendering are passed through ChromeDriver.<br>
-[Download the version](http://chromedriver.chromium.org/downloads) suited to your OS and then set the environment variable `CHROMEDRIVER_PATH`.
+Websites that need JavaScript for rendering use Chrome through Selenium. Install a recent [Google Chrome](https://www.google.com/chrome/) or Chromium build; for a standalone driver matching your browser version, use [Chrome for Testing](https://googlechromelabs.github.io/chrome-for-testing/) and optionally set `CHROMEDRIVER_PATH` as described above.
+
+On Linux you can also use your distribution packages (for example Debian/Ubuntu: `chromium-browser` and `chromium-chromedriver`). When both the scraper and Meilisearch run in Docker on Linux, `--network=host` (or equivalent compose settings) matches the documented local setup.
 
 ## 🤖 Compatibility with Meilisearch
 
-This package guarantees compatibility with [version v1.x of Meilisearch](https://github.com/meilisearch/meilisearch/releases/latest), but some features may not be present. Please check the [issues](https://github.com/meilisearch/docs-scraper/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22+label%3Aenhancement) for more info.
+This package targets [Meilisearch v1.x](https://github.com/meilisearch/meilisearch/releases/latest). For gaps or bugs, see [open issues](https://github.com/meilisearch/docs-scraper/issues).
 
 ## ⚙️ Development Workflow and Contributing
 
@@ -582,4 +583,4 @@ Due to a lot of future changes on this repository compared to the original one, 
 
 <hr>
 
-**Meilisearch** provides and maintains many **SDKs and Integration tools** like this one. We want to provide everyone with an **amazing search experience for any kind of project**. If you want to contribute, make suggestions, or just know what's going on right now, visit us in the [integration-guides](https://github.com/meilisearch/integration-guides) repository.
+Meilisearch provides and maintains many SDKs and integration tools like this one. If you want to contribute, make suggestions, or follow project-wide work, visit the [integration-guides](https://github.com/meilisearch/integration-guides) repository.

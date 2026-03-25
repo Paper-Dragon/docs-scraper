@@ -49,7 +49,7 @@ class TestGetExtraFacets:
         )
 
         c = config({
-            "js-render": True,
+            "js_render": True,
             "start_urls": [
                 {
                     "url": "https://test.com/doc/(?P<type_of_content>.*?)/",

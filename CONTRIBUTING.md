@@ -10,9 +10,9 @@ First of all, thank you for contributing to Meilisearch! The goal of this docume
 
 ## Assumptions
 
-1. **You're familiar with [GitHub](https://github.com) and the [Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)(PR) workflow.**
-2. **You've read the Meilisearch [documentation](https://www.meilisearch.com/docs) and the [README](/README.md).**
-3. **You know about the [Meilisearch community](https://discord.com/invite/meilisearch). Please use this for help.**
+1. You're familiar with [GitHub](https://github.com) and the [Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests) (PR) workflow.
+2. You've read the Meilisearch [documentation](https://www.meilisearch.com/docs) and the [README](/README.md).
+3. You know about the [Meilisearch community](https://discord.com/invite/meilisearch). Please use this for help.
 
 ## How to Contribute
 
@@ -22,13 +22,13 @@ First of all, thank you for contributing to Meilisearch! The goal of this docume
 4. Review the [Development Workflow](#development-workflow) section that describes the steps to maintain the repository.
 5. Make the changes on your branch.
 6. [Submit the branch as a PR](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork) pointing to the `main` branch of the main docs-scraper repository. A maintainer should comment and/or review your Pull Request within a few days. Although depending on the circumstances, it may take longer.<br>
- We do not enforce a naming convention for the PRs, but **please use something descriptive of your changes**, having in mind that the title of your PR will be automatically added to the next [release changelogs](https://github.com/meilisearch/docs-scraper/releases/).
+ We do not enforce a naming convention for the PRs, but please use something descriptive of your changes, having in mind that the title of your PR will be automatically added to the next [release changelogs](https://github.com/meilisearch/docs-scraper/releases/).
 
 ## Development Workflow
 
 ### Install and Launch <!-- omit in TOC -->
 
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/).
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) on Linux (same environment as CI).
 
 Set both environment variables `MEILISEARCH_HOST_URL` and `MEILISEARCH_API_KEY`.
 
@@ -47,34 +47,21 @@ uv sync --group dev
 uv run pylint scraper
 ```
 
-If you have [a `chromedriver`](https://sites.google.com/chromium.org/driver/), you can run the full test suite by passing the path to your `chromedriver`.
-
-```bash
-uv run pytest --chromedriver=/path/to/your/chromedriver
-```
-
-Where `path/to/your/chromedriver` matches your particular path. If you are unsure of your `chromedriver` path you find it on Linux/Mac with:
-
-
-```bash
-which chromedriver
-```
-
-Or on Windwos with:
-
-```bash
-where chromedriver
-```
-
-It is possible when running the tests that an error occurs if your running chrome browser has a different version than your chromedriver. In which case, please download the adequate [chromedriver](https://sites.google.com/chromium.org/driver/).
-
-If you do not have `chromedriver` installed you can skip the tests that require it by running the tests with:
+Tests that are marked `chromedriver` mock the browser in code; they do not require a real ChromeDriver. You can still pass `--chromedriver=/path/to/chromedriver` if you add or run tests that read `CHROMEDRIVER_PATH`. To skip the marked tests:
 
 ```bash
 uv run pytest -m "not chromedriver"
 ```
 
-Note that these tests will still run in CI when you submit your pull request.
+If you need the `chromedriver` path on Linux:
+
+```bash
+which chromedriver
+```
+
+Match the driver major version to your installed Chrome or Chromium where a real browser is used; see [Chrome for Testing](https://googlechromelabs.github.io/chrome-for-testing/).
+
+GitHub Actions runs the linter, unit tests (with Chromium on Ubuntu), integration tests, and a Docker image build on `ubuntu-latest`.
 
 To run the linter and tests on all supported Python versions locally, use [tox](https://tox.wiki/) with the [tox-uv](https://github.com/tox-dev/tox-uv) backend (after `uv sync --group dev`):
 
@@ -82,7 +69,7 @@ To run the linter and tests on all supported Python versions locally, use [tox](
 uv run tox -- --chromedriver=/path/to/your/chromedriver
 ```
 
-If you do not have `chromedriver`:
+If you skip chromedriver-marked tests:
 
 ```bash
 uv run tox -- -m "not chromedriver"
@@ -111,7 +98,7 @@ Some notes on GitHub PRs:
 
 - [Convert your PR as a draft](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/changing-the-stage-of-a-pull-request) if your changes are a work in progress: no one will review it until you pass your PR as ready for review.<br>
   The draft PR can be very useful if you want to show that you are working on something and make your work visible.
-- The branch related to the PR must be **up-to-date with `main`** before merging. Fortunately, this project [integrates a bot](https://github.com/meilisearch/integration-guides/blob/main/resources/bors.md) to automatically enforce this requirement without the PR author having to do it manually.
+- The branch related to the PR must be up to date with `main` before merging. This repository may use [bors](https://github.com/meilisearch/integration-guides/blob/main/resources/bors.md) or maintainer merges to enforce that requirement.
 - All PRs must be reviewed and approved by at least one maintainer.
 - The PR title should be accurate and descriptive of the changes. The title of the PR will be indeed automatically added to the next [release changelogs](https://github.com/meilisearch/docs-scraper/releases/).
 
@@ -121,7 +108,7 @@ Meilisearch tools follow the [Semantic Versioning Convention](https://semver.org
 
 ### Automation to Rebase and Merge the PRs <!-- omit in TOC -->
 
-This project integrates a bot that helps us manage pull requests merging.<br>
+This project may integrate a bot that helps manage pull request merging.<br>
 _[Read more about this](https://github.com/meilisearch/integration-guides/blob/main/resources/bors.md)._
 
 ### Automated Changelogs <!-- omit in TOC -->

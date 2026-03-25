@@ -1,15 +1,18 @@
+import os
+
 import pytest
 
 
 def pytest_addoption(parser):
-    print('ran')
-    parser.addoption("--chromedriver", action="store", default=None, help="Path to chromedriver")
+    parser.addoption(
+        "--chromedriver",
+        action="store",
+        default=None,
+        help="Path to chromedriver (optional; current suite mocks Chrome)",
+    )
 
 
-@pytest.fixture
-def chromedriver(pytestconfig, monkeypatch):
-    chromedriver = pytestconfig.getoption("--chromedriver")
-    if chromedriver:
-        monkeypatch.setenv("CHROMEDRIVER_PATH", chromedriver)
-    yield
-    monkeypatch.delenv("CHROMDRIVER_PATH", raising=False)
+def pytest_configure(config):
+    path = config.getoption("--chromedriver", default=None)
+    if path:
+        os.environ["CHROMEDRIVER_PATH"] = path
