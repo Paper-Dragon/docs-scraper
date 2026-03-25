@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: "3.14"
           cache-suffix: ${{ github.job }}
-          cache-python: true
+          cache-python: false
 
       - name: Install dependencies
         run: uv sync --group dev
@@ -47,7 +47,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
-          cache-python: true
+          cache-python: false
 
       - name: Install dependencies
         run: uv sync --group dev
@@ -73,7 +73,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
-          cache-python: true
+          cache-python: false
 
       - name: Install dependencies for production only
         run: uv sync

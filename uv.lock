@@ -375,7 +375,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "chardet", specifier = ">=3.0.2,<6" },
+    { name = "chardet", specifier = ">=3.0.2,<8" },
     { name = "meilisearch", specifier = ">=0.28.2,<1" },
     { name = "python-keycloak", specifier = ">=5.0,<8" },
     { name = "requests", specifier = ">=2.32.5,<3" },
@@ -388,8 +388,8 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "pylint", specifier = ">=3.3.0" },
-    { name = "pytest", specifier = ">=7.4.1,<9" },
-    { name = "tox", specifier = ">=4.24.1,<4.40" },
+    { name = "pytest", specifier = ">=7.4.1,<10" },
+    { name = "tox", specifier = ">=4.24.1,<4.51" },
     { name = "tox-uv", specifier = ">=1.25.0,<2" },
 ]
 

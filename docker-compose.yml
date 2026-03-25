@@ -1,0 +1,12 @@
+services:
+  docs-scraper:
+    tty: true
+    network_mode: host
+    build: .
+    image: jockerdragon/docs-scraper:latest
+    environment:
+      MEILISEARCH_HOST_URL: ${MEILISEARCH_HOST_URL}
+      MEILISEARCH_API_KEY: ${MEILISEARCH_API_KEY}
+    volumes:
+      - ./meilisearch-scraper.json:/docs-scraper/config.json
+    command: ./docs_scraper config.json
