@@ -1,4 +1,5 @@
 from scrapy.dupefilters import RFPDupeFilter
+from scrapy.crawler import Crawler
 from scrapy.utils.job import job_dir
 from w3lib.url import canonicalize_url
 from scrapy.utils.python import to_bytes
@@ -56,18 +57,29 @@ class CustomDupeFilter(RFPDupeFilter):
             cache[include_headers] = fp.hexdigest()
         return cache[include_headers]
 
-    def __init__(self, path=None, debug=False, use_anchors=False):
-        super().__init__(path=path, debug=debug)
-        # Spread config bool
+    def __init__(
+        self,
+        path=None,
+        debug=False,
+        *,
+        use_anchors=False,
+        fingerprinter=None,
+    ):
+        super().__init__(path, debug, fingerprinter=fingerprinter)
         self.use_anchors = use_anchors
         self.fingerprints_with_scheme = set()  # This set will not be scheme agnostic
 
-    # Overridden method in order to add the use_anchors attribute
     @classmethod
-    def from_settings(cls, settings):
-        debug = settings.getbool('DUPEFILTER_DEBUG')
-        use_anchors = settings.getbool('DUPEFILTER_USE_ANCHORS')
-        return cls(job_dir(settings), debug, use_anchors)
+    def from_crawler(cls, crawler: Crawler):
+        assert crawler.request_fingerprinter
+        debug = crawler.settings.getbool('DUPEFILTER_DEBUG')
+        use_anchors = crawler.settings.getbool('DUPEFILTER_USE_ANCHORS')
+        return cls(
+            job_dir(crawler.settings),
+            debug,
+            use_anchors=use_anchors,
+            fingerprinter=crawler.request_fingerprinter,
+        )
 
     def request_seen(self, request):
         """
